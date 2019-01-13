@@ -1,28 +1,31 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import axios from 'axios';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import Homepage from './Components/Homepage/Homepage';
+import Account from './Components/NewAccount/Account';
+import Todo from './Components/TodoPage/Todo';
+export default class App extends React.Component {
 
-class App extends Component {
+  componentDidMount() {
+    axios.get('http://localhost:3030/api')
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((err) => {
+        throw err;
+      })
+  }
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/" component={Homepage} />
+          <Route exact path="/createuser" component={Account} />
+          <Route exact path="/todo" component={Todo} />
+        </Switch>
+      </BrowserRouter>
     );
   }
 }
 
-export default App;
